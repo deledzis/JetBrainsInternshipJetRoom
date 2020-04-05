@@ -13,7 +13,7 @@ Program allows user to:
 
 ## How it works
 
-This program works with file todo-list.json and creates it if it doesn't exist. The data are stored as a JSON object with 2 fields:
+This program works with file `todo-list.json` and creates it if it doesn't exist. The data are stored as a JSON object with 2 fields:
 
 `count` - **integer**, represents the total number of records in current list.
 
@@ -41,7 +41,7 @@ n, next                - show next page in pagination mode.
 p, prev                - show previous page in pagination mode.
 q, quit                - exit pagination mode.
 "+ <task_content>"     - create and save new task.
-"- n"                  - removed nth task.
+"- n"                  - remove nth task.
 d, done n              - toggle nth task' done status.
 exit                   - exit the program.
 h, help                - show this message.
@@ -56,21 +56,19 @@ Requires JRE or JDK 1.8 and higher to be installed
 ### Launching
 
 Build with Gradle:
+
 `./gradlew build`
 
 Run produced JAR **JetRoom-fat-1.0-SNAPSHOT** located in `buid/libs/`:
+
 `java -jar JetRoom-fat-1.0-SNAPSHOT`
 
 
-## Running the tests
+### Running the tests
 
 Run with Gradle:
+
 `./gradlew clean test`
-
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 
 ## Built With
