@@ -29,26 +29,20 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 }
 
 tasks {
-    "build" {
-        dependsOn(fatJar)
-    }
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
+    build {
+        dependsOn(fatJar)
+    }
     test {
         useJUnitPlatform()
         testLogging {
             events("passed", "skipped", "failed")
         }
-    }
-}
-
-val jar by tasks.getting(Jar::class) {
-    manifest {
-        attributes["Main-Class"] = "com.deledzis.jetroom.view.JetRoomKt"
     }
 }
 

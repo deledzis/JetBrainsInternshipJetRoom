@@ -7,7 +7,6 @@ import com.deledzis.jetroom.util.localized
 import kotlin.math.ceil
 
 class ListPrintPreparerImpl : IListPrintPreparer {
-
     override fun prepareListToPrint(): List<String> {
         return if (Repository.getForListing().isEmpty()) {
             listOf(localized(Consts.L_EMPTY_LIST))
@@ -62,6 +61,7 @@ class ListPrintPreparerImpl : IListPrintPreparer {
                 )
             )
         }
+
         output.add(
             "${localized(Consts.L_NEXT_PAGE)} ${localized(
                 Consts.L_PREV_PAGE

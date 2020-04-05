@@ -15,6 +15,7 @@ import com.deledzis.jetroom.view.IView
 
 class MenuController(private val view: IView) : IMenuHandler {
     private val listManipulator by lazy { ListManipulatorImpl() }
+
     private val listPrintPreparer by lazy { ListPrintPreparerImpl() }
 
     override fun handleUserInput(input: String) {
