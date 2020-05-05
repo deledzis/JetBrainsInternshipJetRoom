@@ -3,6 +3,7 @@ package com.deledzis.jetroom.view
 import com.deledzis.jetroom.controller.IMenuHandler
 import com.deledzis.jetroom.controller.MenuController
 import com.deledzis.jetroom.model.Repository
+import com.deledzis.jetroom.model.TodoData
 import com.deledzis.jetroom.util.Consts
 import com.deledzis.jetroom.util.Consts.L_CANT_READ_FILE
 import com.deledzis.jetroom.util.Consts.L_EMPTY_LIST
@@ -32,32 +33,44 @@ class JetRoom : IView {
     fun run() {
         printer.printLine(localized(Consts.L_WELCOME))
 
-        val fileContent = readFileContent()
-        if (fileContent == null) {
-            printer.printLine(localized(L_CANT_READ_FILE))
-            return
-        } else if (fileContent.isBlank()) {
-            printer.printLine(localized(L_EMPTY_LIST))
-        } else {
-            val data = parseJsonToData(fileContent)
-            if (data != null && !data.items.isNullOrEmpty()) {
-                Repository.setData(data.items)
-                printer.printLine("${localized(
-                    L_TASKS_COUNT,
-                    Repository.data.count,
-                    Repository.data.items.filter { !it.isDone }.size
-                )} ${localized(L_SHOW_LIST)}")
-            } else {
+        val fileContent: String? = readFileContent()
+        when {
+            fileContent == null -> {
+                printer.printLine(localized(L_CANT_READ_FILE))
+                return
+            }
+            fileContent.isBlank() -> {
                 printer.printLine(localized(L_EMPTY_LIST))
+            }
+            else -> {
+                parseData(jsonString = fileContent)
             }
         }
         printer.printLine(localized(L_SHOW_HELP))
 
+        handleUserInput()
+    }
+
+    private fun parseData(jsonString: String) {
+        val data: TodoData? = parseJsonToData(jsonString)
+        if (data != null && !data.items.isNullOrEmpty()) {
+            Repository.setData(data.items)
+            printer.printLine("${localized(
+                L_TASKS_COUNT,
+                Repository.data.count,
+                Repository.data.items.filter { !it.isDone }.size
+            )} ${localized(L_SHOW_LIST)}")
+        } else {
+            printer.printLine(localized(L_EMPTY_LIST))
+        }
+    }
+
+    private fun handleUserInput() {
         var userInput = ""
-        while (userInput.trim() != "exit") {
+        while (userInput != "exit") {
             printer.printString("> ")
-            userInput = readLine() ?: ""
-            menuHandler.handleUserInput(userInput.trim())
+            userInput = readLine()?.trim() ?: ""
+            menuHandler.handleUserInput(userInput)
         }
     }
 }
